@@ -11,10 +11,10 @@ import numpy as np
 
 from reedsolo import RSCodec, ReedSolomonError
 from termcolor import cprint
-from pyfiglet import figlet_format
+from pyfiglet import figlet_format #figlet 문자를 character을 사용하여 출력 > 꾸미기인듯
 
-HANDSHAKE_START_HZ = 8192
-HANDSHAKE_END_HZ = 8192 + 512
+HANDSHAKE_START_HZ = 8192  # 2^13 = 8192 왤까
+HANDSHAKE_END_HZ = 8192 + 512 # 512 흠..
 
 START_HZ = 1024
 STEP_HZ = 256
@@ -22,14 +22,14 @@ BITS = 4
 
 FEC_BYTES = 4
 
-def stereo_to_mono(input_file, output_file):
-    inp = wave.open(input_file, 'r')
+def stereo_to_mono(input_file, output_file): #
+    inp = wave.open(input_file, 'r') 
     params = list(inp.getparams())
     params[0] = 1 # nchannels
     params[3] = 0 # nframes
 
     out = wave.open(output_file, 'w')
-    out.setparams(tuple(params))
+    out.setparams(tuple(params))  #??????무슨역할???????????
 
     frame_rate = inp.getframerate()
     frames = inp.readframes(inp.getnframes())
