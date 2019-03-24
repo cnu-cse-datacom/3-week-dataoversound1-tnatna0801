@@ -1,30 +1,30 @@
-from __future__ import print_function
+from __future__ import print_function  #아직 모르겠음
 
-import sys
-import wave
+import sys  #
+import wave # wav 음악 형식과 관련된 처리를 할때 사용
 
 from io import StringIO
 
 import alsaaudio
 import colorama
-import numpy as np
+import numpy as np # numpy 배열????
 
 from reedsolo import RSCodec, ReedSolomonError
 from termcolor import cprint
 from pyfiglet import figlet_format #figlet 문자를 character을 사용하여 출력 > 꾸미기인듯
 
-HANDSHAKE_START_HZ = 8192  # 2^13 = 8192 왤까
+HANDSHAKE_START_HZ = 8192  # 2^13 = 8192 왤까 송신자와 수신자가 통신을 시작하는 약속하는 단계
 HANDSHAKE_END_HZ = 8192 + 512 # 512 흠..
 
-START_HZ = 1024
-STEP_HZ = 256
-BITS = 4
+START_HZ = 1024  # 4bit + 아스키코드(8bit)
+STEP_HZ = 256 # 근데 왜 step이 256일까
+BITS = 4 #무슨비트니...
 
-FEC_BYTES = 4
+FEC_BYTES = 4  #forward error correction 수신측이 에러 자체 정정
 
-def stereo_to_mono(input_file, output_file): #
+def stereo_to_mono(input_file, output_file): #stereo는 채널 2개 mono는 채널 1개 오디오를 1개로??
     inp = wave.open(input_file, 'r') 
-    params = list(inp.getparams())
+    params = list(inp.getparams()) #??? getparams 뭔데
     params[0] = 1 # nchannels
     params[3] = 0 # nframes
 
