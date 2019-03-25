@@ -56,9 +56,9 @@ def yield_chunks(input_file, interval):
 
 def dominant(frame_rate, chunk):
     #print("chunk",chunk)
-    w = np.fft.fft(chunk)
+    w = np.fft.fft(chunk) #fft 빠른 푸리에 변환/주파수 분석
     #print("w:",w)
-    freqs = np.fft.fftfreq(len(chunk))
+    freqs = np.fft.fftfreq(len(chunk)) #청크의 길이를
     #print("freqs:",freqs)
     peak_coeff = np.argmax(np.abs(w))
     #print("peak_coeff:",peak_coeff)
