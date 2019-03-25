@@ -13,12 +13,12 @@ from reedsolo import RSCodec, ReedSolomonError
 from termcolor import cprint
 from pyfiglet import figlet_format #figlet 문자를 character을 사용하여 출력 > 꾸미기인듯
 
-HANDSHAKE_START_HZ = 8192  # 2^13 = 8192 왤까 송신자와 수신자가 통신을 시작하는 약속하는 단계
-HANDSHAKE_END_HZ = 8192 + 512 # 512 흠..
+HANDSHAKE_START_HZ = 8192  # 송신자와 수신자가 통신을 시작하는 약속하는 단계
+HANDSHAKE_END_HZ = 8192 + 512 #
 
-START_HZ = 1024  # 4bit + 아스키코드(8bit)
-STEP_HZ = 256 # 근데 왜 step이 256일까
-BITS = 4 #무슨비트니...
+START_HZ = 1024  # 
+STEP_HZ = 256 # 
+BITS = 4 # 무슨비트니...
 
 FEC_BYTES = 4  #forward error correction 수신측이 에러 자체 정정
 
@@ -40,11 +40,11 @@ def stereo_to_mono(input_file, output_file): #stereo는 채널 2개 mono는 채�
     inp.close()
     out.close()
 
-def yield_chunks(input_file, interval):
+def yield_chunks(input_file, interval): #
     wav = wave.open(input_file)
     frame_rate = wav.getframerate()
 
-    chunk_size = int(round(frame_rate * interval))
+    chunk_size = int(round(frame_rate * interval)) #톤 1개가 표현하는 비트수
     total_size = wav.getnframes()
 
     while True:
@@ -54,7 +54,7 @@ def yield_chunks(input_file, interval):
 
         yield frame_rate, np.fromstring(chunk, dtype=np.int16)
 
-def dominant(frame_rate, chunk):
+def dominant(frame_rate, chunk): #주요주파수 찾기
     #print("chunk",chunk)
     w = np.fft.fft(chunk) #fft 빠른 푸리에 변환/주파수 분석
     #print("w:",w)
@@ -67,7 +67,8 @@ def dominant(frame_rate, chunk):
     return abs(peak_freq * frame_rate) # in Hz
 
 def match(freq1, freq2):
-    return abs(freq1 - freq2) < 20
+    #print(freq1)
+    return abs(freq1 - freq2) < 20 #절댓값
 
 def decode_bitchunks(chunk_bits, chunks):
     out_bytes = []
